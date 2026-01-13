@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Clipping Loss Calculator - Complete Guide</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            page-break-before: always;
+        }
+        h1:first-of-type {
+            page-break-before: avoid;
+        }
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #e74c3c;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #16a085;
+            margin-top: 20px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            page-break-inside: avoid;
+        }
+        pre code {
+            background: transparent;
+            color: #ecf0f1;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            page-break-inside: avoid;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+        .success {
+            background: #d4edda;
+            padding: 15px;
+            border-left: 4px solid #28a745;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+        .info {
+            background: #d1ecf1;
+            padding: 15px;
+            border-left: 4px solid #17a2b8;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+        .formula {
+            background: #e8f5e9;
+            padding: 15px;
+            border: 2px solid #4caf50;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            page-break-inside: avoid;
+        }
+        .toc {
+            background: #f8f9fa;
+            padding: 20px;
+            border: 2px solid #dee2e6;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .toc li {
+            padding: 5px 0;
+        }
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        @media print {
+            body {
+                padding: 0;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Complete Guide to Advanced Clipping Loss Calculator</h1>
+
+<div class="success">
+    <strong>Executive Summary:</strong> This document provides a complete explanation of the Advanced Clipping Loss Calculator - an automated tool that calculates solar energy losses due to inverter clipping using the industry-standard Forced PPC methodology.
+    <br><br>
+    <strong>Time Savings:</strong> 540x faster than manual calculation (4.5 hours → 30 seconds per day)
+</div>
+
+<div class="toc">
+    <h2>Table of Contents</h2>
+    <ul>
+        <li><a href="#section1">1. What You Have</a></li>
+        <li><a href="#section2">2. The Problem: Clipping Loss</a></li>
+        <li><a href="#section3">3. The 4-Step Algorithm</a></li>
+        <li><a href="#section4">4. How to Use the Script</a></li>
+        <li><a href="#section5">5. Understanding the Output</a></li>
+        <li><a href="#section6">6. Advanced Features</a></li>
+        <li><a href="#section7">7. Formula Reference</a></li>
+        <li><a href="#section8">8. Real-World Workflow</a></li>
+        <li><a href="#section9">9. Advantages Over Manual Methods</a></li>
+    </ul>
+</div>
+
+<h1 id="section1">1. What You Have</h1>
+
+<h2>Your Files</h2>
+
+<h3>1. advanced_clipping_calculator.py</h3>
+<ul>
+    <li>The Python script that performs all calculations</li>
+    <li>Your "calculator tool"</li>
+    <li>Run this to analyze your data</li>
+</ul>
+
+<h3>2. Your_Data.xlsx (Input)</h3>
+<ul>
+    <li>Your raw solar data</li>
+    <li>Required columns: DateTime, Active Power (kW), POA Irradiance (W/m²), AC Capacity, DC Capacity</li>
+</ul>
+
+<h3>3. Your_Data_ADVANCED_RESULTS.xlsx (Output)</h3>
+<ul>
+    <li>Analysis results</li>
+    <li>Contains 5 comprehensive sheets</li>
+    <li>Generated automatically by the script</li>
+</ul>
+
+<h3>4. ADVANCED_CALCULATOR_GUIDE.md</h3>
+<ul>
+    <li>User manual and instructions</li>
+    <li>Static documentation</li>
+</ul>
+
+<h1 id="section2">2. The Problem: Clipping Loss</h1>
+
+<h2>What is Clipping Loss?</h2>
+
+<p>Solar systems often have:</p>
+<ul>
+    <li><strong>DC Capacity:</strong> 7,534.89 kW (what panels can generate)</li>
+    <li><strong>AC Capacity:</strong> 5,000 kW (what inverter can handle)</li>
+</ul>
+
+<div class="highlight">
+    <strong>The Problem:</strong> When the sun is strong, panels want to produce more than the inverter can handle. The excess power is "clipped" (wasted).
+</div>
+
+<h3>Example Timeline</h3>
+
+<table>
+    <tr>
+        <th>Time</th>
+        <th>Sun Strength</th>
+        <th>Panels Want to Produce</th>
+        <th>Inverter Allows</th>
+        <th>Status</th>
+    </tr>
+    <tr>
+        <td>8:00 AM</td>
+        <td>Weak</td>
+        <td>1,500 kW</td>
+        <td>5,000 kW</td>
+        <td>✅ No problem</td>
+    </tr>
+    <tr style="background: #ffe6e6;">
+        <td>12:00 PM</td>
+        <td>Strong</td>
+        <td>5,500 kW</td>
+        <td>5,000 kW</td>
+        <td>❌ 500 kW lost!</td>
+    </tr>
+    <tr>
+        <td>4:00 PM</td>
+        <td>Moderate</td>
+        <td>3,000 kW</td>
+        <td>5,000 kW</td>
+        <td>✅ No problem</td>
+    </tr>
+</table>
+
+<p>The 500 kW lost at noon is <strong>clipping loss</strong>.</p>
+
+<h1 id="section3">3. The 4-Step Algorithm</h1>
+
+<h2>Overview</h2>
+<p>The script uses a scientific 4-step process:</p>
+<ol>
+    <li>Find the "Clipping Window"</li>
+    <li>Calculate "Reference PR"</li>
+    <li>Simulate "What Should Have Been"</li>
+    <li>Calculate the Loss</li>
+</ol>
+
+<h2>Step 1: Find the Clipping Window</h2>
+
+<p><strong>What it does:</strong> Scans all data minute-by-minute, identifies when power reaches AC capacity</p>
+
+<p><strong>How it works:</strong></p>
+<ol>
+    <li>Set threshold = AC_Capacity × 0.985 = 5,000 × 0.985 = 4,925 kW</li>
+    <li>Scan from beginning: Find first time power ≥ 4,925 kW</li>
+    <li>Scan from end: Find last time power ≥ 4,925 kW</li>
+</ol>
+
+<div class="success">
+    <strong>Example Result:</strong>
+    <ul>
+        <li>Clipping Start: 10:52 AM</li>
+        <li>Clipping Stop: 1:42 PM</li>
+        <li>Duration: 170 minutes (2.85 hours)</li>
+    </ul>
+</div>
+
+<h2>Step 2: Calculate Reference PR (Performance Ratio)</h2>
+
+<p><strong>What it does:</strong> Determines system efficiency when NOT clipping</p>
+
+<p><strong>How it works:</strong></p>
+<ol>
+    <li>Take 10 data points BEFORE clipping starts</li>
+    <li>Take 10 data points AFTER clipping ends</li>
+    <li>For each point, calculate: PR = Actual_Power / (POA × DC_Capacity / 1000)</li>
+    <li>Average all 20 PR values</li>
+</ol>
+
+<div class="formula">
+<strong>Example Calculation (10:51 AM):</strong><br><br>
+Actual Power = 4,894 kW<br>
+POA = 732 W/m²<br>
+DC Capacity = 7,534.89 kW<br><br>
+PR = 4,894 / (732 × 7.53489)<br>
+&nbsp;&nbsp; = 4,894 / 5,515.62<br>
+&nbsp;&nbsp; = 0.8867 (88.67%)
+</div>
+
+<div class="success">
+    <strong>Result:</strong> Reference PR = 0.8838 (88.38%)<br>
+    Meaning: When NOT clipping, system operates at 88.38% efficiency
+</div>
+
+<h2>Step 3: Simulate "What Should Have Been"</h2>
+
+<p><strong>Formula:</strong></p>
+<div class="formula">
+Simulated_Power = Reference_PR × DC_Capacity × (POA / 1000)
+</div>
+
+<p><strong>Example Calculations:</strong></p>
+
+<table>
+    <tr>
+        <th>Time</th>
+        <th>POA</th>
+        <th>Simulated</th>
+        <th>Actual</th>
+        <th>Loss</th>
+    </tr>
+    <tr>
+        <td>11:00 AM</td>
+        <td>750</td>
+        <td>4,992 kW</td>
+        <td>5,000 kW</td>
+        <td>0 kW</td>
+    </tr>
+    <tr style="background: #fff3cd;">
+        <td>12:00 PM</td>
+        <td>900</td>
+        <td>5,990 kW</td>
+        <td>5,000 kW</td>
+        <td>990 kW</td>
+    </tr>
+    <tr style="background: #ffe6e6;">
+        <td>12:39 PM</td>
+        <td>879</td>
+        <td>5,849 kW</td>
+        <td>4,917 kW</td>
+        <td><strong>932 kW</strong> ← Peak!</td>
+    </tr>
+</table>
+
+<h2>Step 4: Calculate the Loss</h2>
+
+<p><strong>Process:</strong></p>
+<ol>
+    <li>Sum all ACTUAL power: 2,055,839 kW·min / 60 = 34,263.99 kWh</li>
+    <li>Sum all SIMULATED power: 2,121,608 kW·min / 60 = 35,360.14 kWh</li>
+    <li>Calculate loss: 35,360.14 - 34,263.99 = 1,096.15 kWh</li>
+    <li>Calculate percentages: (1,097.39 / 34,263.99) × 100 = 3.20%</li>
+</ol>
+
+<div class="success">
+    <strong>Final Results:</strong>
+    <ul>
+        <li>Daily Actual Energy: 34,263.99 kWh</li>
+        <li>Daily Simulated Energy: 35,360.14 kWh</li>
+        <li>Clipping Loss: 1,097.39 kWh</li>
+        <li>Loss %: 3.20% (vs actual), 3.10% (vs simulated)</li>
+        <li>Peak Loss: 932.11 kW at 12:39 PM</li>
+    </ul>
+</div>
+
+<h1 id="section4">4. How to Use the Script</h1>
+
+<h2>Step-by-Step Instructions</h2>
+
+<h3>Step 1: Prepare Your Data</h3>
+<p>Ensure Excel file has required columns and save in Solar folder</p>
+
+<h3>Step 2: Open Terminal</h3>
+<pre><code>cd /Users/addubey/Desktop/Solar</code></pre>
+
+<h3>Step 3: Run the Script</h3>
+<pre><code>python3 advanced_clipping_calculator.py "your_file.xlsx"</code></pre>
+
+<h3>Step 4: Watch It Work</h3>
+<p>The script will display system parameters, each of the 4 steps, and final results</p>
+
+<h3>Step 5: Check Your Results</h3>
+<p>Open the generated <code>*_ADVANCED_RESULTS.xlsx</code> file with 5 sheets</p>
+
+<h1 id="section5">5. Understanding the Output</h1>
+
+<h2>The 5 Excel Sheets</h2>
+
+<h3>Sheet 1: Summary</h3>
+<p><strong>Contains:</strong> Analysis date, system parameters, clipping window, reference PR, energy analysis, peak clipping</p>
+<p><strong>Use for:</strong> Quick overview, management reports</p>
+
+<h3>Sheet 2: Clipping_Events</h3>
+<p><strong>Contains:</strong> One row per minute of clipping with DateTime, Actual/Simulated Power, POA, Loss</p>
+<p><strong>Use for:</strong> Minute-by-minute analysis, finding peak moments</p>
+
+<h3>Sheet 3: Hourly_Summary</h3>
+<p><strong>Contains:</strong> Hourly aggregation with Average/Total/Max power and loss per hour</p>
+<p><strong>Use for:</strong> Identifying worst hours, hourly trends</p>
+
+<h3>Sheet 4: PR_Calculation_Details</h3>
+<p><strong>Contains:</strong> All 20 data points used for PR calculation with Phase, Time, Power, POA, PR</p>
+<p><strong>Use for:</strong> Audit trail, transparency, verification</p>
+
+<h3>Sheet 5: Full_Data</h3>
+<p><strong>Contains:</strong> Entire day's data (all minutes) with Actual/Simulated Power and POA</p>
+<p><strong>Use for:</strong> Graphing, visualization, custom analysis</p>
+
+<h1 id="section6">6. Advanced Features</h1>
+
+<h2>Date Filtering</h2>
+<pre><code>python3 advanced_clipping_calculator.py "data.xlsx" 2025-12-26</code></pre>
+
+<h2>Time Range Filtering</h2>
+<p>Analyze only 12 PM - 2 PM:</p>
+<pre><code>python3 advanced_clipping_calculator.py "data.xlsx" 2025-12-26 12 14</code></pre>
+
+<p>Analyze 11 AM - 3 PM:</p>
+<pre><code>python3 advanced_clipping_calculator.py "data.xlsx" 2025-12-26 11 15</code></pre>
+
+<h1 id="section7">7. Formula Reference</h1>
+
+<h2>All Key Formulas</h2>
+
+<div class="formula">
+<strong>1. Clipping Threshold</strong><br>
+Threshold = AC_Capacity × 0.985<br>
+Example: 5,000 × 0.985 = 4,925 kW
+</div>
+
+<div class="formula">
+<strong>2. Performance Ratio (PR)</strong><br>
+PR = Actual_Power / (POA × DC_Capacity / 1000)<br>
+Example: 4,894 / (732 × 7.53489) = 0.8867
+</div>
+
+<div class="formula">
+<strong>3. Reference PR</strong><br>
+Reference_PR = Average of 20 PR values<br>
+Example: (0.8867 + 0.8804 + ... + 0.7553) / 20 = 0.8838
+</div>
+
+<div class="formula">
+<strong>4. Simulated Power</strong><br>
+Simulated = Reference_PR × DC_Capacity × (POA / 1000)<br>
+Example: 0.8838 × 7,534.89 × 0.879 = 5,849 kW
+</div>
+
+<div class="formula">
+<strong>5. Power Loss</strong><br>
+Loss = Simulated_Power - Actual_Power<br>
+Example: 5,849 - 4,917 = 932 kW
+</div>
+
+<div class="formula">
+<strong>6. Energy Conversion</strong><br>
+Energy (kWh) = Σ(Power readings in kW) / 60<br>
+Why 60? Readings are per minute, not per hour<br>
+Example: 2,055,839 kW·min / 60 = 34,263.99 kWh
+</div>
+
+<div class="formula">
+<strong>7. Loss Percentage</strong><br>
+Loss% = (Loss / Total_Energy) × 100<br>
+Example: (1,097.39 / 34,263.99) × 100 = 3.20%
+</div>
+
+<h1 id="section8">8. Real-World Workflow</h1>
+
+<h2>Daily Analysis Example</h2>
+
+<h3>Monday (Dec 26):</h3>
+<ol>
+    <li>Get data from monitoring system → Save as "Dec26.xlsx"</li>
+    <li>Run: <code>python3 advanced_clipping_calculator.py "Dec26.xlsx"</code></li>
+    <li>Open: <code>Dec26_ADVANCED_RESULTS.xlsx</code></li>
+    <li>Check Summary sheet: Loss = 1,097.39 kWh (3.20%)</li>
+    <li>Report: "We lost 3.2% due to clipping today"</li>
+</ol>
+
+<h3>Tuesday (Dec 27):</h3>
+<ol>
+    <li>Get new data → Save as "Dec27.xlsx"</li>
+    <li>Run script on new file</li>
+    <li>Check results: Loss = 1,200 kWh (3.5%) ← Worse!</li>
+    <li>Investigation: Check Hourly_Summary to find worst hours</li>
+</ol>
+
+<h3>Monthly Report:</h3>
+<ol>
+    <li>Collect all daily result files</li>
+    <li>Consolidate losses (Dec 26: 1,097 kWh, Dec 27: 1,200 kWh, etc.)</li>
+    <li>Calculate total: ~35,000 kWh lost in December</li>
+    <li>Present to management with recommendations</li>
+</ol>
+
+<h1 id="section9">9. Advantages Over Manual Methods</h1>
+
+<h2>Comparison</h2>
+
+<table>
+    <tr>
+        <th>Aspect</th>
+        <th>Manual Method</th>
+        <th>This Script</th>
+    </tr>
+    <tr>
+        <td><strong>Time per day</strong></td>
+        <td>4-5 hours</td>
+        <td style="background: #d4edda;"><strong>30 seconds</strong></td>
+    </tr>
+    <tr>
+        <td><strong>Calculation errors</strong></td>
+        <td>Possible</td>
+        <td style="background: #d4edda;"><strong>Zero</strong></td>
+    </tr>
+    <tr>
+        <td><strong>PR calculation</strong></td>
+        <td>Manual, fixed</td>
+        <td style="background: #d4edda;"><strong>Automatic, dynamic</strong></td>
+    </tr>
+    <tr>
+        <td><strong>Consistency</strong></td>
+        <td>Varies by person</td>
+        <td style="background: #d4edda;"><strong>Always same method</strong></td>
+    </tr>
+    <tr>
+        <td><strong>Auditability</strong></td>
+        <td>Difficult</td>
+        <td style="background: #d4edda;"><strong>Full transparency</strong></td>
+    </tr>
+    <tr>
+        <td><strong>Reporting</strong></td>
+        <td>Manual Excel work</td>
+        <td style="background: #d4edda;"><strong>5 automatic sheets</strong></td>
+    </tr>
+    <tr>
+        <td><strong>Scalability</strong></td>
+        <td>One day at a time</td>
+        <td style="background: #d4edda;"><strong>Process months</strong></td>
+    </tr>
+</table>
+
+<h2>Return on Investment</h2>
+
+<div class="success">
+    <strong>Time Savings:</strong>
+    <ul>
+        <li>Manual: 4.5 hours per day</li>
+        <li>Script: 30 seconds per day</li>
+        <li>Speed increase: <strong>540x faster</strong></li>
+    </ul>
+    
+    <strong>Monthly Savings:</strong>
+    <ul>
+        <li>30 days × 4.5 hours = <strong>135 hours saved per month</strong></li>
+        <li>At typical engineering rates: Significant cost savings</li>
+    </ul>
+    
+    <strong>Quality Improvements:</strong>
+    <ul>
+        <li>Zero calculation errors</li>
+        <li>Consistent methodology</li>
+        <li>Fully auditable</li>
+        <li>Scientific approach</li>
+    </ul>
+</div>
+
+<h1>Conclusion</h1>
+
+<p>The Advanced Clipping Loss Calculator provides a fully automated, scientific, and auditable solution for calculating solar clipping losses. By implementing the industry-standard 4-step Forced PPC methodology, it delivers:</p>
+
+<div class="success">
+    <ul>
+        <li>✅ <strong>Accuracy:</strong> Scientific calculations with zero errors</li>
+        <li>✅ <strong>Speed:</strong> 540x faster than manual methods</li>
+        <li>✅ <strong>Transparency:</strong> Full audit trail of all calculations</li>
+        <li>✅ <strong>Comprehensiveness:</strong> 5 detailed report sheets</li>
+        <li>✅ <strong>Scalability:</strong> Process months of data instantly</li>
+    </ul>
+    <p><strong>No more manual calculations needed!</strong></p>
+</div>
+
+<h1>Quick Reference</h1>
+
+<h3>Basic Command</h3>
+<pre><code>python3 advanced_clipping_calculator.py "your_file.xlsx"</code></pre>
+
+<h3>With Date Filter</h3>
+<pre><code>python3 advanced_clipping_calculator.py "your_file.xlsx" 2025-12-26</code></pre>
+
+<h3>With Time Range</h3>
+<pre><code>python3 advanced_clipping_calculator.py "your_file.xlsx" 2025-12-26 11 15</code></pre>
+
+<h3>Output File</h3>
+<p><code>your_file_ADVANCED_RESULTS.xlsx</code> (5 sheets)</p>
+
+<hr>
+
+<p style="text-align: center; margin-top: 50px; color: #7f8c8d;">
+    <strong>Document Version:</strong> 1.0<br>
+    <strong>Last Updated:</strong> December 2025<br>
+    <strong>Automated Solar Analysis System</strong>
+</p>
+
+</body>
+</html>
+
+
+
